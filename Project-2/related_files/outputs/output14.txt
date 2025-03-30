@@ -1,0 +1,8 @@
+movie_id	title	director_name	director_surname
+4	The Wolf of Wall Street	Martin	Scorsese
+10	Dune	Denis	Villeneuve
+11	Barbie	Greta	Gerwig
+16	Mad Max: Fury Road	Ridley	Scott
+17	Star Wars: The Force Awakens	Peter	Jackson
+18	The Social Network	Steven	Spielberg
+19	Frozen	Denis	Villeneuve

@@ -1,0 +1,8 @@
+movie_id	movie_name	duration	rating	director_name
+6	Gladiator	155	8.5	Ridley Scott
+2	Pulp Fiction	154	8.9	Quentin Tarantino
+9	The Lord of the Rings: The Return of the King	201	9	Peter Jackson
+4	The Wolf of Wall Street	180	8.2	Martin Scorsese
+7	The Godfather	175	9.2	Francis Ford Coppola
+8	Interstellar	169	8.6	Christopher Nolan
+12	The Dark Knight	152	9	Christopher Nolan

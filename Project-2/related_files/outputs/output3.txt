@@ -1,0 +1,2 @@
+movie_id	title	release_date	duration	director_id	rating	genre_id	budget
+19	Frozen	23.08.2013	102	10	7.4	6	150000000

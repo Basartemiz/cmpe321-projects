@@ -1,0 +1,21 @@
+movie_id	title	duration	rating	director_id	date
+11	Barbie	114	7.5	5	08/06/2023
+10	Dune	155	8	10	10/11/2021
+16	Mad Max: Fury Road	120	8.1	7	06/08/2015
+17	Star Wars: The Force Awakens	138	7.8	9	09/06/2015
+15	The Revenant	156	8	1	21/01/2015
+20	Guardians of the Galaxy	121	8	1	12/09/2014
+8	Interstellar	169	8.6	1	24/03/2014
+4	The Wolf of Wall Street	180	8.2	4	14/09/2013
+19	Frozen	102	7.4	10	23/08/2013
+1	Inception	148	8.8	1	11/12/2010
+18	The Social Network	120	8.1	3	11/04/2010
+13	Avatar	162	7.8	6	27/06/2009
+12	The Dark Knight	152	9	1	13/05/2008
+9	The Lord of the Rings: The Return of the King	201	9	9	11/11/2003
+6	Gladiator	155	8.5	7	09/12/2000
+14	The Matrix	136	8.7	1	25/12/1999
+5	Titanic	195	7.8	6	23/08/1997
+2	Pulp Fiction	154	8.9	2	09/10/1994
+3	Jurassic Park	127	8.1	3	04/05/1993
+7	The Godfather	175	9.2	8	12/12/1972

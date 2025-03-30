@@ -1,0 +1,11 @@
+name	surname	average_rating
+Matt	Damon	8.64
+Samuel L.	Jackson	8.633333333333335
+Marlon	Brando	8.54
+Jeff	Goldblum	8.440000000000001
+Tom	Hardy	8.433333333333332
+Russell	Crowe	8.275
+Kate	Winslet	8.15
+Margot	Robbie	8.14
+Keanu	Reeves	8.14
+Leonardo	DiCaprio	7.859999999999999

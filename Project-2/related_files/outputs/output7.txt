@@ -1,0 +1,4 @@
+actor_id	name	surname	birth_date
+12	Brad	Pitt	24.02.1963
+18	Robert	Pattinson	15.05.1986
+22	Natalie	Portman	13.11.1981

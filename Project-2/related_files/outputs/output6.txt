@@ -1,0 +1,11 @@
+actor_name	actor_surname	movie_count
+Tom	Hardy	6
+Samuel L.	Jackson	6
+Leonardo	DiCaprio	5
+Jeff	Goldblum	5
+Margot	Robbie	5
+Marlon	Brando	5
+Keanu	Reeves	5
+Matt	Damon	5
+Kate	Winslet	4
+Russell	Crowe	4

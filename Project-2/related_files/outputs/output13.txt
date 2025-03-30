@@ -1,0 +1,14 @@
+genre_name	name	surname	directed_count
+Action	Christopher	Nolan	1
+Action	Ridley	Scott	1
+Adventure	James	Cameron	1
+Adventure	Steven	Spielberg	1
+Comedy	Greta	Gerwig	1
+Comedy	Denis	Villeneuve	1
+Crime	Francis Ford	Coppola	1
+Crime	Quentin	Tarantino	1
+Drama	Christopher	Nolan	1
+Drama	Martin	Scorsese	1
+Drama	Steven	Spielberg	1
+Fantasy	Peter	Jackson	2
+Sci-Fi	Christopher	Nolan	4

@@ -1,0 +1,11 @@
+name	surname	genre_count	multiple_appearance
+Kate	Winslet	3	TRUE
+Margot	Robbie	5	TRUE
+Keanu	Reeves	5	TRUE
+Samuel L.	Jackson	5	TRUE
+Tom	Hardy	4	TRUE
+Jeff	Goldblum	4	TRUE
+Leonardo	DiCaprio	3	TRUE
+Matt	Damon	4	TRUE
+Russell	Crowe	3	TRUE
+Marlon	Brando	3	TRUE

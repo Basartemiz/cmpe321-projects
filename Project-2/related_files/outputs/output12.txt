@@ -1,0 +1,16 @@
+movie_name	release_year	rating
+The Godfather	1972	9.2
+Jurassic Park	1993	8.1
+Pulp Fiction	1994	8.9
+Titanic	1997	7.8
+The Matrix	1999	8.7
+Gladiator	2000	8.5
+The Lord of the Rings: The Return of the King	2003	9
+The Dark Knight	2008	9
+Avatar	2009	7.8
+Inception	2010	8.8
+The Wolf of Wall Street	2013	8.2
+Interstellar	2014	8.6
+Mad Max: Fury Road	2015	8.1
+Dune	2021	8
+Barbie	2023	7.5

@@ -1,0 +1,7 @@
+movie_id	title	release_date	duration	director_id	rating	genre_id	budget
+20	Guardians of the Galaxy	12.09.2014	121	1	8	1	170000000
+15	The Revenant	21.01.2015	156	1	8	2	135000000
+14	The Matrix	25.12.1999	136	1	8.7	3	63000000
+12	The Dark Knight	13.05.2008	152	1	9	3	185000000
+8	Interstellar	24.03.2014	169	1	8.6	3	165000000
+1	Inception	11.12.2010	148	1	8.8	3	160000000

@@ -1,0 +1,6 @@
+director_id	name	surname	genre_count
+1	Christopher	Nolan	3
+3	Steven	Spielberg	2
+6	James	Cameron	2
+7	Ridley	Scott	2
+10	Denis	Villeneuve	2

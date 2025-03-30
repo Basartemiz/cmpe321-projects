@@ -1,0 +1,2 @@
+genre_id	genre_name	average_rating
+10	Crime	9.05
