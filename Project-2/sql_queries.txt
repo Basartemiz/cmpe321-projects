@@ -2,10 +2,10 @@
 
 #used string to date function in order to compare dates then used the same format in order to 
 #list the movies in ascending order
-SELECT movie.movie_id, movie.title, movie.duration, movie.rating, movie.director_id, STR_TO_DATE(movie.release_date, '%d.%m.%Y') AS formatted_date
+SELECT movie.movie_id, movie.title, movie.duration, movie.rating, movie.director_id, DATE_FORMAT(STR_TO_DATE(movie.release_date, '%d.%m.%Y'), '%d/%m/%Y')AS date
 FROM movies movie
 WHERE STR_TO_DATE(movie.release_date, '%d.%m.%Y')  < '2024-01-01'
-ORDER BY STR_TO_DATE(movie.release_date, '%d.%m.%Y') ASC;
+ORDER BY STR_TO_DATE(movie.release_date, '%d.%m.%Y') desc;
 
 #query 4
 
@@ -24,10 +24,11 @@ ORDER BY movie.budget ASC;
 #then use group by operator in order to use aggregate operators
 #finally use count operator to finalize the query
 
-select actor.name,actor.surname,COUNT(*) as movie_count
+select actor.name as actor_name,actor.surname as actor_surname,COUNT(*) as movie_count
 from Actors_and_Actresses actor,Cast cast
 where actor.actor_id=cast.actor_id
 group by cast.actor_id
+order by COUNT(*) desc
 
 
 #query 8
@@ -41,6 +42,7 @@ from Directors director, Movies movie
 where director.director_id=movie.director_id 
 group by director.director_id
 having count(*)>=3;
+order by director.surname desc
 
 #query 10
 
@@ -49,6 +51,7 @@ having count(*)>=3;
 select director.name,director.surname,director.nationality
 from Directors director,Movies movie,Genres genre
 where movie.director_id=director.director_id and (STR_TO_DATE(movie.release_date, '%d.%m.%Y'))  < '2024-12-31' and (STR_TO_DATE(movie.release_date, '%d.%m.%Y')  > '2020-01-01') and genre.genre_id=movie.genre_id and genre.genre_name='Sci-Fi';
+order by director.nationality asc
 
 
 #query 12
@@ -56,12 +59,13 @@ where movie.director_id=director.director_id and (STR_TO_DATE(movie.release_date
 #firstly we get the each movie 
 #then compare it to the max rating  in the movie's year
 #if it is okey we take the movie and order it in ascending order
-select director.name,director.surname,movie.title as movie_name, year(STR_TO_DATE(movie.release_date, '%d.%m.%Y')) as year,movie.rating
+select movie.title as movie_name, year(STR_TO_DATE(movie.release_date, '%d.%m.%Y')) as release_year,movie.rating
 from Directors director,Movies movie
 where director.director_id=movie.director_id and movie.rating= ( select max(movie2.rating)
 																from Directors director2 ,Movies movie2
                                                                 where director2.director_id=movie2.director_id and year(STR_TO_DATE(movie2.release_date, '%d.%m.%Y'))=year(STR_TO_DATE(movie.release_date, '%d.%m.%Y')))
 ORDER BY year(STR_TO_DATE(movie.release_date, '%d.%m.%Y')) ASC; 
+
 
 #query 14
 #firstly we should select movies that are after 2010 
@@ -72,5 +76,58 @@ select movie.movie_id,movie.title,director.name as director_name,director.surnam
 from Movies movie,Directors director
 where movie.director_id=director.director_id and  year(STR_TO_DATE(movie.release_date, '%d.%m.%Y'))>=2010 and not( director.name='Christopher' and director.surname='Nolan')
 order by movie_id asc
+
+
+#query 16
+
+#cross producted actors,movies and cast
+#grouped them by actor id
+#used the avg operator to find the average
+#ordered them descending order
+
+select actor.name,actor.surname,avg(movie.rating) as average_rating
+from Actors_and_Actresses actor, Movies movie,Cast cast
+where movie.movie_id=cast.movie_id and actor.actor_id=cast.actor_id
+group by actor.actor_id
+order by avg(movie.rating) desc
+#query 18
+
+#firstly created a sub query and listed grouped directors by their genre_id , 
+#this enabled me to get a table of entries which every director entry belongs to a different genre
+#then at my main query i grouped directors based on their id and then ordered them in descending order
+select	director2.director_id, director2.name as name , director2.surname as surname , count(*) as genre_count
+	from Directors director2 ,
+	(select director.director_id 
+	from Directors director , Movies movie
+	where director.director_id=movie.director_id
+	group by director.director_id, movie.genre_id) genres
+    where director2.director_id=genres.director_id
+    group by director2.director_id
+    having count(*)>1
+    ORDER BY count(*) DESC
+	
+#query 20
+
+#first of all ,I joined actors and movies and cast then grouped them by actor and movie genre 
+#this enabled me to see how much of each genre an actor played
+#then I grouped them again by actor id which then I found genre_count
+
+select actor2.name,actor2.surname,count(*) as genre_count, Case when count(*)>1 then 'True' else 'False' end as multiple_appearance
+
+from Actors_and_Actresses actor2 ,
+(select actor.actor_id ,count(*)
+from Actors_and_Actresses actor, Movies movie, Cast cast
+where movie.movie_id=cast.movie_id and cast.actor_id=actor.actor_id
+group by actor.actor_id,movie.genre_id
+order by actor.actor_id ) genres
+
+where actor2.actor_id=genres.actor_id
+
+group by actor2.actor_id
+
+order by actor2.surname desc
+
+
+
 
 
