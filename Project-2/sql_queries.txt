@@ -1,0 +1,76 @@
+#query 2
+
+#used string to date function in order to compare dates then used the same format in order to 
+#list the movies in ascending order
+SELECT movie.movie_id, movie.title, movie.duration, movie.rating, movie.director_id, STR_TO_DATE(movie.release_date, '%d.%m.%Y') AS formatted_date
+FROM movies movie
+WHERE STR_TO_DATE(movie.release_date, '%d.%m.%Y')  < '2024-01-01'
+ORDER BY STR_TO_DATE(movie.release_date, '%d.%m.%Y') ASC;
+
+#query 4
+
+
+#used a nested query to find the maximum rating 
+#listed the movies in ascending order
+SELECT movie.title, movie.rating, movie.budget
+FROM movies movie
+WHERE movie.rating=(select max(movie.rating) from movies movie)
+ORDER BY movie.budget ASC;
+
+#query 6
+
+#first cross product actors and cast with from operator
+#then get only where actor id equals to the cast's actor id to avoid duplicates
+#then use group by operator in order to use aggregate operators
+#finally use count operator to finalize the query
+
+select actor.name,actor.surname,COUNT(*) as movie_count
+from Actors_and_Actresses actor,Cast cast
+where actor.actor_id=cast.actor_id
+group by cast.actor_id
+
+
+#query 8
+
+#firstly we should cross product director and movies 
+#then we must take only where the director that directs the related movie
+#then we must use group by clause in order to use count function
+#then with using having by clause we can get the intended result which is movies more than 3
+select director.name,director.surname
+from Directors director, Movies movie
+where director.director_id=movie.director_id 
+group by director.director_id
+having count(*)>=3;
+
+#query 10
+
+#firstly we cross product directors movies and genres
+# then we take only if the genre is sci fi and date is between the intended period by using str to date function.
+select director.name,director.surname,director.nationality
+from Directors director,Movies movie,Genres genre
+where movie.director_id=director.director_id and (STR_TO_DATE(movie.release_date, '%d.%m.%Y'))  < '2024-12-31' and (STR_TO_DATE(movie.release_date, '%d.%m.%Y')  > '2020-01-01') and genre.genre_id=movie.genre_id and genre.genre_name='Sci-Fi';
+
+
+#query 12
+#this query uses year function in order to extract year from the date
+#firstly we get the each movie 
+#then compare it to the max rating  in the movie's year
+#if it is okey we take the movie and order it in ascending order
+select director.name,director.surname,movie.title as movie_name, year(STR_TO_DATE(movie.release_date, '%d.%m.%Y')) as year,movie.rating
+from Directors director,Movies movie
+where director.director_id=movie.director_id and movie.rating= ( select max(movie2.rating)
+																from Directors director2 ,Movies movie2
+                                                                where director2.director_id=movie2.director_id and year(STR_TO_DATE(movie2.release_date, '%d.%m.%Y'))=year(STR_TO_DATE(movie.release_date, '%d.%m.%Y')))
+ORDER BY year(STR_TO_DATE(movie.release_date, '%d.%m.%Y')) ASC; 
+
+#query 14
+#firstly we should select movies that are after 2010 
+#then we should look for movies which are directed after 2010
+#then we check if the director is christopher nolan ,if not we chose the movie
+#at last we ascend it by id
+select movie.movie_id,movie.title,director.name as director_name,director.surname director_surname
+from Movies movie,Directors director
+where movie.director_id=director.director_id and  year(STR_TO_DATE(movie.release_date, '%d.%m.%Y'))>=2010 and not( director.name='Christopher' and director.surname='Nolan')
+order by movie_id asc
+
+
