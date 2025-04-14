@@ -3,7 +3,7 @@
 # producing one row for each distinct director-genre combination. 
 # The main query then groups by director_id to count how many distinct genres each director has worked in. 
 # It only returns those directors who have more than one genre, and sorts them by that genre count in descending order.
-SELECT director2.director_id, director2.name AS name, director2.surname AS surname, COUNT(*) AS genre_count
+SELECT  director2.name AS name, director2.surname AS surname, COUNT(*) AS genre_count
 FROM Directors director2,
      (SELECT director.director_id
       FROM Directors director, Movies movie
