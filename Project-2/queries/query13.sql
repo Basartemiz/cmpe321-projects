@@ -1,6 +1,8 @@
 USE MovieDB;
 
 -- 13
+-- Fınds who directed most movies for each genre.
+-- To create this query, numerous subqueries were used.
 SELECT DISTINCT G.genre_name,D.name, D.surname ,(
 	SELECT count(*)
 	FROM Movies M2
