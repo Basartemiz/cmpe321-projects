@@ -1,19 +1,34 @@
 import { useState } from "react";
+import { useData } from "../DataContext";
+
 
 const Card = (props) => {
-  const { hall_id, hall_name, hall_country, hall_capacity } = props;
+  const { hall_id, hall_name, country, capacity } = props;
   const [newNameInput, setNewNameInput] = useState("");
   const [currentName, setCurrentName] = useState(hall_name);
+
+  const {renameHall}=useData()
 
   const handleInputChange = (e) => {
     setNewNameInput(e.target.value);
   };
 
-  const handleRenameClick = () => {
-    if (newNameInput.trim() !== "") {
-      setCurrentName(newNameInput.trim());
-      setNewNameInput(""); // clear input after renaming
-    }
+  const handleRenameClick =async () => {
+    const data=await renameHall({
+      "hall_name":newNameInput,
+      "hall_id":hall_id,
+    })
+    if(data.status=="ok"){
+      if (newNameInput.trim() !== "") {
+        setCurrentName(newNameInput);
+        setNewNameInput(""); 
+        
+      }
+      else{
+        console.log(data.status+":status")
+      }
+    
+   }
   };
 
   return (
@@ -22,9 +37,9 @@ const Card = (props) => {
         <h5 className="card-title">{currentName}</h5>
         <h6 className="card-subtitle mb-2 text-muted">Hall ID: {hall_id}</h6>
         <p className="card-text mb-4">
-          <strong>Country:</strong> {hall_country}
+          <strong>Country:</strong> {country}
           <br />
-          <strong>Capacity:</strong> {hall_capacity}
+          <strong>Capacity:</strong> {capacity}
         </p>
 
         <input
@@ -41,7 +56,7 @@ const Card = (props) => {
           onClick={handleRenameClick}
           disabled={newNameInput.trim() === ""}
         >
-          ✨ Rename Hall
+           Rename Hall
         </button>
       </div>
     </div>

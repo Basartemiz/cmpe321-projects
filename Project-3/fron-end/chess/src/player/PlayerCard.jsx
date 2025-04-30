@@ -2,21 +2,27 @@
 
 const PlayerCard = (props) => {
     const {
-      player_id,
-      player_name,
+      name,
+      surname,
       elo_rating,
     } = props;
     //delete match from database
     
   
     return (
+
       <div className="card shadow-sm m-3" style={{ width: "20rem" }}>
+
         <div className="card-body d-flex flex-column">
-          <h5 className="card-title text-center">player: {player_id}</h5>
+
+          <h5 className="card-title text-center">player:</h5>
           
           <p className="card-text">
-            <strong>Player name:</strong> {player_name} <br />
+
+            <strong>Player name:</strong> {name} <br />
+            <strong>Player surname:</strong> {surname} <br />
             <strong>Elo-rating:</strong> {elo_rating}
+            
           </p>
         </div>
       </div>

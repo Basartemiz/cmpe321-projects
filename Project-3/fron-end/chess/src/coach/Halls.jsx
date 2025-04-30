@@ -1,29 +1,26 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useData } from "../DataContext";
-import { useAuth } from "../login/AuthContext";
-import Match from "./Match";
+import Hall from "./Hall";
 
-export const Coach = () => {
 
-  const {fetchMatchsCoach,matchs}=useData()
-  const{user}=useAuth()
-  console.log(user)
+export const Halls = () => {
+
+  const {fetchHalls,halls}=useData()
   useEffect(() => {
-    
-    fetchMatchsCoach(user);
+    fetchHalls();
   }, []); 
-  // [] means only once when component loads
+  
 
-  if (!matchs) {
-    return <div>Loading...</div>; // Show loading screen
+  if (!halls) {
+    return <div>Loading...</div>; 
   }
 
     
 
-  const matchs_data = matchs.map((props) => (
-    <li key={props.match_id} className="list-unstyled">
-      <Match {...props} />
+  const halls_data = halls.map((props) => (
+    <li key={props.hall_id} className="list-unstyled">
+      <Hall {...props} />
     </li>
   ));
 
@@ -46,28 +43,12 @@ export const Coach = () => {
       </div>
     </nav>
       <ul className="d-flex flex-wrap justify-content-center p-0 m-0">
-        {matchs_data}
+        {halls_data}
       </ul>
 
-      <Link
-        to="/createMatch"
-        className="btn btn-primary position-fixed"
-        style={{
-          bottom: "20px",
-          right: "20px",
-          borderRadius: "50%",
-          width: "60px",
-          height: "60px",
-          fontSize: "12px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        Add Match
-      </Link>
+      
     </div>
   );
 };
 
-export default Coach;
+export default Halls;

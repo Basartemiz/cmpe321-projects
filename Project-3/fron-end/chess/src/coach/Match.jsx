@@ -1,9 +1,22 @@
-import { useState } from "react";
+
+import { useNavigate } from "react-router-dom";
+import { useData } from "../DataContext";
 
 const Match = (props) => {
+
+  const {deleteMatch}=useData()
+  const navigate=useNavigate()
+  function format(dateString) {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');  
+    const year = date.getFullYear();
+    return `${day},${month},${year}`;
+  }
+
   const {
     match_id,
-    date,
+    match_date,
     time_slot,
     hall_id,
     table_id,
@@ -13,9 +26,12 @@ const Match = (props) => {
     ratings,
     
   } = props;
+
   //delete match from database
   const handleDelete=()=>{
-
+      const data=deleteMatch(match_id)
+      console.log(data.status)
+      navigate("/")
   }
 
   return (
@@ -24,7 +40,7 @@ const Match = (props) => {
         <h5 className="card-title text-center">Match ID: {match_id}</h5>
         
         <p className="card-text">
-          <strong>Date:</strong> {date} <br />
+          <strong>Date:</strong> {format(match_date)} <br />
           <strong>Time Slot:</strong> {time_slot} <br />
           <strong>Hall:</strong> {hall_id} <br />
           <strong>Table:</strong> {table_id} <br />

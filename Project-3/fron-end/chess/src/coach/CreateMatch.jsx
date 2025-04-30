@@ -1,38 +1,90 @@
+import { useEffect } from "react";
 import { useState } from "react";
+import { useData } from "../DataContext";
+import { useAuth } from "../login/AuthContext";
 
 function CreateMatch() {
-  const [date, setDate] = useState("");
+  const [match_id, setID] = useState(0);
+  const [match_date, setDate] = useState("");
   const [timeSlot, setTimeSlot] = useState("");
   const [hallId, setHallId] = useState("");
   const [tableId, setTableId] = useState("");
   const [team1, setTeam1] = useState("");
-  const [team2, setTeam2] = useState("");
   const [arbiter, setArbiter] = useState("");
 
-  // Mocked data (you can replace with real props later)
-  const halls = [
-    { id: "id1", name: "Hall 1" },
-    { id: "id2", name: "Hall 2" },
-  ];
+  const {user}=useAuth()
 
-  const teams = ["Team A", "Team B", "Team C", "Team D", "Team E"];
-  const arbiters = ["arbiter_john", "arbiter_emily", "arbiter_mike", "arbiter_sarah"];
+  const {
+    fetchHalls,
+    halls,
 
-  const handleSubmit = (e) => {
+    teams,
+    fetchTeams,
+
+    fetchArbiters,
+    arbiters,
+
+    createMatch,
+
+    getCoachTeam,
+    team_id,
+
+  }=useData()
+
+  //get halls from backend
+
+  useEffect(()=>{
+    fetchHalls()
+  },[]);
+
+  useEffect(()=>{
+    fetchTeams()
+  },[]);
+
+  useEffect(()=>{
+    fetchArbiters()
+  },[]);
+
+  useEffect(()=>{
+    getCoachTeam(user)
+    console.log(user)
+    console.log(team_id)
+  },[]);
+
+
+
+  if (!halls) {
+    return <div>Loading Halls...</div>; 
+  }
+
+  if (!teams) {
+    return <div>Loading Teams...</div>; 
+  }
+
+  if (!arbiters) {
+    return <div>Loading Arbiters...</div>; 
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     const matchData = {
-      date,
+      match_id,
+      match_date,
       time_slot: timeSlot,
       hall_id: hallId,
       table_id: tableId,
-      team1_id: team1,
+      team1_id: team_id,
+      team2_id:team1,
       arbiter_username: arbiter,
     };
 
-    console.log("Created Match:", matchData);
+    const status=await createMatch(matchData)
+    if(status!=="ok"){
+      console.log(status)
+    }
 
-    // Here you can send matchData to backend API or context
+    
   };
 
   return (
@@ -41,32 +93,43 @@ function CreateMatch() {
         <h2 className="text-center mb-4 text-primary">Create Match</h2>
 
         <form onSubmit={handleSubmit}>
-          {/* Date */}
+
+          <div className="mb-3">
+            <label className="form-label fw-bold">Match ID</label>
+            <input
+              type="number"
+              className="form-control"
+              value={match_id}
+              onChange={(e) => setID(e.target.value)}
+              required
+            />
+          </div>
+
           <div className="mb-3">
             <label className="form-label fw-bold">Match Date</label>
             <input
               type="date"
               className="form-control"
-              value={date}
+              value={match_date}
               onChange={(e) => setDate(e.target.value)}
               required
             />
           </div>
 
-          {/* Time Slot */}
+         
           <div className="mb-3">
             <label className="form-label fw-bold">Time Slot</label>
             <input
-              type="text"
+              type="number"
               className="form-control"
-              placeholder="e.g. 10:00 - 11:30"
+              placeholder="e.g. 1"
               value={timeSlot}
               onChange={(e) => setTimeSlot(e.target.value)}
               required
             />
           </div>
 
-          {/* Hall Selection */}
+         
           <div className="mb-3">
             <label className="form-label fw-bold">Hall</label>
             <select
@@ -76,15 +139,15 @@ function CreateMatch() {
               required
             >
               <option value="">Select Hall</option>
-              {halls.map((hall) => (
-                <option key={hall.id} value={hall.id}>
-                  {hall.name}
+              {halls.map(({hall_id,hall_name}) => (
+                <option key={hall_id} value={hall_id}>
+                  {hall_name}
                 </option>
               ))}
             </select>
           </div>
 
-          {/* Table ID */}
+         
           <div className="mb-3">
             <label className="form-label fw-bold">Table ID</label>
             <input
@@ -97,7 +160,7 @@ function CreateMatch() {
             />
           </div>
 
-          {/* Team 1 */}
+         
           <div className="mb-3">
             <label className="form-label fw-bold">Team 1</label>
             <select
@@ -107,15 +170,15 @@ function CreateMatch() {
               required
             >
               <option value="">Select Team 1</option>
-              {teams.map((team, idx) => (
-                <option key={idx} value={team}>
-                  {team}
+              {teams.map(({team_name,team_id}, idx) => (
+                <option key={team_id} value={team_id}>
+                  {team_id}
                 </option>
               ))}
             </select>
           </div>
 
-          {/* Arbiter */}
+          
           <div className="mb-3">
             <label className="form-label fw-bold">Select Arbiter</label>
             <select
@@ -125,9 +188,9 @@ function CreateMatch() {
               required
             >
               <option value="">Select Arbiter</option>
-              {arbiters.map((arb, idx) => (
-                <option key={idx} value={arb}>
-                  {arb}
+              {arbiters.map(({username}, idx) => (
+                <option key={username} value={username}>
+                  {username}
                 </option>
               ))}
             </select>
