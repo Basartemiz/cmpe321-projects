@@ -1,6 +1,4 @@
-/* -----------------------------------------------------------
-   make sure we are in the right schema
------------------------------------------------------------ */
+
 USE chess_database;
 
 SET foreign_key_checks = 0;
@@ -29,9 +27,7 @@ INSERT INTO DBManagers (username, password) VALUES
   ('maria',   'M@r1a321');
 
 /* -----------------------------------------------------------
-   3.  Players  (49 rows)
-   columns: username, password, name, surname, nationality,
-            date_of_birth, fide_id, elo_rating, title_id
+   
 ----------------------------------------------------------- */
 INSERT INTO Players
 (username,password,name,surname,nationality,date_of_birth,fide_id,elo_rating,title_id) VALUES
@@ -138,7 +134,7 @@ INSERT INTO Players
   ('lily', 9);
 
 /* -----------------------------------------------------------
-   Coaches  (10 rows)
+  
 ----------------------------------------------------------- */
 INSERT INTO Coaches
 (username, password, name, surname, nationality,
@@ -155,7 +151,7 @@ INSERT INTO Coaches
   ('arslan_yusuf', 'Yusuf199', 'Yusuf',    'Arslan',  'Turkey', 10, '2024-02-01', '2026-08-01');
 
 /* -----------------------------------------------------------
-   CoachCertifications  (13 rows)
+  
 ----------------------------------------------------------- */
 INSERT INTO CoachCertifications (coach_username, certification) VALUES
   ('carol',        'FIDE Certified'),
@@ -184,7 +180,7 @@ INSERT INTO CoachCertifications (coach_username, certification) VALUES
   (108, 'King''s Arena Foundation');
 
 /* -----------------------------------------------------------------
-   Teams   (must reference the sponsor_id’s above)
+   
 ----------------------------------------------------------------- */
 INSERT INTO Teams (team_id, team_name, sponsor_id) VALUES
   (1,  'Knights',       100),
@@ -241,7 +237,7 @@ INSERT INTO Halls (hall_id, hall_name, country, capacity) VALUES
   (10, 'Opening Hall',       'Japan',       5);
 
 /* -----------------------------------------------------------------
-   Tables (physical chess tables)  – 16 rows
+   Tables 
 ----------------------------------------------------------------- */
 INSERT INTO Tables (table_id, hall_id) VALUES
   (1, 1),
@@ -262,9 +258,7 @@ INSERT INTO Tables (table_id, hall_id) VALUES
   (16,10);
 
 /* -----------------------------------------------------------------
-   Matches   (20 rows)
-   dd-mm-yyyy  ➜  yyyy-mm-dd
-   “8,2”       ➜  8.2   (DECIMAL)
+   
 ----------------------------------------------------------------- */
 INSERT INTO Matches
 (match_id, match_date, time_slot, hall_id, table_id,
