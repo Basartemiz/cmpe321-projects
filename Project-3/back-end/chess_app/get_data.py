@@ -184,14 +184,15 @@ def createMatch(data):
                 (match_id, match_date, time_slot, hall_id, table_id, team1_id, team2_id, arbiter_username, ratings)
                 VALUES (
                     {data["match_id"]},
-                    '{data["date"]}',
+                    '{data["match_date"]}',
                     {data["time_slot"]},
                     {data["hall_id"]},
                     {data["table_id"]},
                     {data["team1_id"]},
                     {data["team2_id"]},
                     '{data["arbiter_username"]}',
-                    {data["ratings"]}
+                    NULL
+                    
                 )
             """)
             return [{"status":"ok"}]
@@ -202,10 +203,46 @@ def deleteMatch(match_id):
     try:
         with connection.cursor() as cursor:
                 
-            cursor.execute("DELETE FROM Matches WHERE match_id = %s", [match_id])
+            cursor.execute(f"DELETE FROM Matches WHERE match_id = {match_id}")
 
             return [{"status":"ok"}]
         
+    except Exception as e:
+        return [{"status":str(e)}]
+    
+def getArbiters():
+    try:
+        with connection.cursor() as cursor:
+                
+            cursor.execute("select username from Arbiters")
+
+            #get rows
+            rows = cursor.fetchall()
+            
+            
+
+            #convert to dict
+            columns = [col[0] for col in cursor.description]
+            arbiters = [dict(zip(columns, row)) for row in rows]
+            return arbiters
+    except Exception as e:
+        return [{"status":str(e)}]
+    
+def getCoachTeam(props):
+    try:
+        with connection.cursor() as cursor:
+                
+            cursor.execute(f"select team_id from Coaches where username='{props["username"]}' ")
+
+            #get rows
+            rows = cursor.fetchall()
+            
+            
+
+            #convert to dict
+            columns = [col[0] for col in cursor.description]
+            team_id = [dict(zip(columns, row)) for row in rows]
+            return team_id
     except Exception as e:
         return [{"status":str(e)}]
 

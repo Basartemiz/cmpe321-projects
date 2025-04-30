@@ -111,10 +111,30 @@ def deleteMatch(request):
     #lets get the type
     if(request.method=="POST"):
         #get data
-        status=get_data.createMatch(request.data["match_id"])
+        status=get_data.deleteMatch(request.data["match_id"])
         print(request.data)
         return Response(status[0])
     return Response()
 
+@api_view(['GET'])
+def getArbiters(request):
+    #lets get the type
+    if(request.method=="GET"):
+        #get data
+        status=get_data.getArbiters()
+        print(request.data)
+        return Response(status)
+    return Response()
+
+
+@api_view(['GET', 'POST'])
+def getTeam(request):
+    #lets get the type
+    if(request.method=="POST"):
+        #get data
+        status=get_data.getCoachTeam(request.data)
+        print(request.data)
+        return Response(status)
+    return Response()
 
 

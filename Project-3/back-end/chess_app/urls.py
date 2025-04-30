@@ -19,6 +19,10 @@ urlpatterns = [
 
     path("deleteMatch/", views.deleteMatch, name="deleteMatch"),
 
+    path("getArbiter/", views.getArbiters, name="getArbiter"),
+
+    path("getCoachTeam/", views.getTeam, name="getTeam"),
+
     path("teams/",views.teams), 
 
     path("user/",views.user),  
