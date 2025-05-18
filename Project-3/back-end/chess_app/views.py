@@ -38,13 +38,33 @@ def arbiter_match(request,arbiter_username):
         matches=get_data.get_all_matches_arbiter(arbiter_username)
         return Response(matches)
 
+#------Players-----------------
+
 #get ==> will return player list , listed desc by elo rating
 @api_view(['GET', 'POST'])
 def player(request,player_username):
     if(request.method=="GET"):
         players=get_data.get_players(player_username)
         return Response(players)
+
+
+#get return the average elo rating of the player with a tie
+@api_view(['GET', 'POST'])
+def player_tie(request,player_username):
+    if(request.method=="GET"):
+        avg_tie=get_data.get_players_tie(player_username)
+        return Response({"tie": avg_tie})
     
+
+#get return the average elo rating of the player with a tie
+@api_view(['GET', 'POST'])
+def player_most(request,player_username):
+    if(request.method=="GET"):
+        players=get_data.get_players_most(player_username)
+        return Response(players)
+
+#------Players-----------------
+
 @api_view(['GET', 'POST'])
 def teams(request):
     if(request.method=="GET"):
@@ -136,5 +156,7 @@ def getTeam(request):
         print(request.data)
         return Response(status)
     return Response()
+
+
 
 

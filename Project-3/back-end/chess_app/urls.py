@@ -7,7 +7,13 @@ urlpatterns = [
 
     path("arbiter/<str:arbiter_username>/", views.arbiter_match, name="arbiter"),
 
-    path("player/<str:player_username>/", views.player, name="player"),
+    #----player endpoints---------
+    path("player/<str:player_username>/", views.player, name="player_get"),
+
+    path("player/<str:player_username>/tie", views.player_tie, name="player_tie"),
+
+    path("player/<str:player_username>/most", views.player_most, name="player_most"),
+     #----player endpoints---------
 
     path("addCoach/", views.addCoach, name="addCoach"),
 

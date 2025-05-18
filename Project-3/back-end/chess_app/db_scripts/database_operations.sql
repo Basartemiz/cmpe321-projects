@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS Teams (
 );
 
 /* -----------------------------------------------------------
-   PlayerTeams  (junction)
+   PlayerTeams
 ----------------------------------------------------------- */
 CREATE TABLE IF NOT EXISTS PlayerTeams (
     username VARCHAR(50) NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS PlayerTeams (
         REFERENCES Players(username)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
-    CONSTRAINT foreign_key_team
+    CONSTRAINT foreign_key_team_PlayerTeams
         FOREIGN KEY (team_id)
         REFERENCES Teams(team_id)
         ON UPDATE CASCADE
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS Coaches (
     contract_start  DATE         NOT NULL,
     contract_finish DATE         NOT NULL,
     PRIMARY KEY (username),
-    CONSTRAINT foreign_key_team
+    CONSTRAINT foreign_key_team_Coaches
         FOREIGN KEY (team_id)
         REFERENCES Teams(team_id)
         ON UPDATE CASCADE
@@ -160,7 +160,7 @@ CREATE TABLE IF NOT EXISTS Halls (
 );
 
 /* -----------------------------------------------------------
-   Tables (physical chess tables)
+   Tables 
 ----------------------------------------------------------- */
 CREATE TABLE IF NOT EXISTS Tables (
     table_id INT NOT NULL,
@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS Tables (
 CREATE TABLE IF NOT EXISTS Matches (
     match_id         INT          NOT NULL,
     match_date       DATE         NOT NULL,
-    time_slot        TINYINT      NOT NULL,
+    time_slot        INT          NOT NULL,
     hall_id          INT          NOT NULL,
     table_id         INT          NOT NULL,
     team1_id         INT          NOT NULL,
@@ -188,36 +188,65 @@ CREATE TABLE IF NOT EXISTS Matches (
     ratings          DECIMAL(3,1),
     PRIMARY KEY (match_id),
 
-    CONSTRAINT foreign_key_match
+    CONSTRAINT foreign_key_match_Matches
         FOREIGN KEY (hall_id)
         REFERENCES Halls(hall_id)
         ON UPDATE CASCADE
         ON DELETE RESTRICT,
 
-    CONSTRAINT foreign_key_table
+    CONSTRAINT foreign_key_table_Matches
         FOREIGN KEY (table_id)
         REFERENCES Tables(table_id)
         ON UPDATE CASCADE
         ON DELETE RESTRICT,
 
-    CONSTRAINT foreign_key_team
+    CONSTRAINT foreign_key_team1_Matches
         FOREIGN KEY (team1_id)
         REFERENCES Teams(team_id)
         ON UPDATE CASCADE
         ON DELETE RESTRICT,
 
-    CONSTRAINT foreign_key_team
+    CONSTRAINT foreign_key_team2_Matches
         FOREIGN KEY (team2_id)
         REFERENCES Teams(team_id)
         ON UPDATE CASCADE
         ON DELETE RESTRICT,
 
-    CONSTRAINT foreign_key_arbiter
+    CONSTRAINT foreign_key_arbiter_Matches
         FOREIGN KEY (arbiter_username)
         REFERENCES Arbiters(username)
         ON UPDATE CASCADE
         ON DELETE RESTRICT
 );
-    
-    
 
+
+/* -----------------------------------------------------------
+   MatchesAssignments
+----------------------------------------------------------- */
+    
+    
+CREATE TABLE MatchAssignment (
+    match_id INT PRIMARY KEY,
+    white_player VARCHAR(50),
+    black_player VARCHAR(50),
+    result VARCHAR(20),
+
+
+    CONSTRAINT match_Assignment
+        FOREIGN KEY (match_id)
+        REFERENCES Matches(match_id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+
+    CONSTRAINT white_Assignment
+        FOREIGN KEY (white_player)
+        REFERENCES Players(username)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+
+     CONSTRAINT black_Assignment
+        FOREIGN KEY (black_player)
+        REFERENCES Players(username)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);

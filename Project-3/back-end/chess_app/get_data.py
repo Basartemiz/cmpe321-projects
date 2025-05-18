@@ -58,13 +58,24 @@ def get_all_matches_arbiter(arbiter_username):
         columns = [col[0] for col in cursor.description]
         matches = [dict(zip(columns, row)) for row in rows]
     return matches
-
+#------player functions-------------
 def get_players(player_name):
     with connection.cursor() as cursor:
         # 1. execute sql command
         cursor.execute(f"""
-            SELECT name, surname, elo_rating
-            FROM Players
+            SELECT p.name, p.surname, p.elo_rating
+            FROM Players p 
+            where p.username in (
+                select m.white_player
+                from  MatchAssignment m 
+                where m.black_player="{player_name}")
+                 or
+            p.username in(
+                select m.black_player
+                from  MatchAssignment m
+                where m.white_player="{player_name}")
+            
+            order by p.elo_rating desc
         """)
         # 2. fetch all rows
         rows = cursor.fetchall()
@@ -75,6 +86,82 @@ def get_players(player_name):
         columns = [col[0] for col in cursor.description]
         players = [dict(zip(columns, row)) for row in rows]
     return players
+
+
+def get_players_tie(player_name):
+    with connection.cursor() as cursor:
+        # 1. execute sql command
+        cursor.execute(f"""
+            SELECT avg(p.elo_rating)
+            FROM Players p 
+            where p.username in (
+                select m.white_player
+                from  MatchAssignment m 
+                where m.black_player="{player_name}" and  m.result="draw")
+                or
+            p.username in(
+                select m1.black_player
+                from  MatchAssignment m1
+                where m1.white_player="{player_name}" and  m1.result="draw")
+            
+            
+        """)
+        # 2. fetch all rows
+        rows = cursor.fetchall()
+        
+        
+        
+    return rows[0]
+
+
+def get_players_most(player_name):
+    with connection.cursor() as cursor:
+        # 1. execute sql command
+        cursor.execute(f"""
+        SELECT p.name,p.elo_rating
+            FROM Players p 
+            where p.username in (
+                select m.white_player
+                from  MatchAssignment m 
+                where m.black_player="{player_name}")
+                or
+            p.username in(
+                select m1.black_player
+                from  MatchAssignment m1
+                where m1.white_player="{player_name}" )
+            
+            group by p.username
+            having count(*) in 
+        (
+            select max(total_matches) from (
+            SELECT count(*) as total_matches
+            FROM Players p 
+            where p.username in (
+                select m.white_player
+                from  MatchAssignment m 
+                where m.black_player="{player_name}")
+                or
+            p.username in(
+                select m1.black_player
+                from  MatchAssignment m1
+                where m1.white_player="{player_name}" )
+            
+            group by p.username
+           ) as table_1
+           )
+        """)
+        # 2. fetch all rows
+        rows = cursor.fetchall()
+        
+        
+        
+        columns = [col[0] for col in cursor.description]
+        player = [dict(zip(columns, row)) for row in rows]
+    return player
+
+
+#------player functions-------------
+
 
 def get_teams():
     with connection.cursor() as cursor:
@@ -232,7 +319,7 @@ def getCoachTeam(props):
     try:
         with connection.cursor() as cursor:
                 
-            cursor.execute(f"select team_id from Coaches where username='{props["username"]}' ")
+            cursor.execute(f"SELECT team_id FROM Coaches WHERE username = '{props['username']}'")
 
             #get rows
             rows = cursor.fetchall()

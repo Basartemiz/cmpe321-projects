@@ -284,4 +284,27 @@ INSERT INTO Matches
   (19, '2025-02-10', 1, 5,  1,  5,  8, 'lucy',    9.7),
   (20, '2025-02-10', 3, 5,  2,  6,  9, 'ahmet',   7.4);
 
+INSERT INTO MatchAssignment (match_id, white_player, black_player, result) VALUES
+(1, 'alice', 'bob1', 'draw'),
+(2, 'clara', 'david', 'black wins'),
+(3, 'emma', 'felix', 'black wins'),
+(4, 'grace', 'henry', 'draw'),
+(5, 'isabel', 'jack', 'black wins'),
+(6, 'kara', 'liam', 'white wins'),
+(7, 'mia', 'noah', 'black wins'),
+(8, 'olivia', 'peter', 'white wins'),
+(9, 'quinn', 'rachel', 'black wins'),
+(10, 'sam', 'tina', 'black wins'),
+(11, 'tina', 'umar', 'white wins'),
+(12, 'umar', 'vera', 'white wins'),
+(13, 'vera', 'will', 'black wins'),
+(14, 'will', 'xena', 'draw'),
+(15, 'xena', 'yusuff', 'draw'),
+(16, 'yusuff', 'zoe', 'white wins'),
+(17, 'zoe', 'hakan', 'black wins'),
+(18, 'hakan', 'julia', 'black wins'),
+(19, 'julia', 'mehmet', 'black wins'),
+(20, 'mehmet', 'elena', 'white wins');
+
+
   SET foreign_key_checks = 1;
