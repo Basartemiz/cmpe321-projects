@@ -19,6 +19,8 @@ function DataProvider({children}){
     const [arbiterMatchs,setArbiterMatchs]=useState(null)
 
     const [player,setPlayers]=useState(null)
+    const [tie,setTie]=useState(null)
+    const [mostPlayers,setMost]=useState(null)
 
     const [teams,setTeams]=useState(null)
 
@@ -34,7 +36,6 @@ function DataProvider({children}){
             .catch(error => console.error('Error fetching halls:', error));
     }
 
-    const changeHallName=()=>{} //TO DO
 
     const fetchMatchsCoach=(coach_username)=>{
         fetch(`${API_URL}chess_app/match/${coach_username}/`)
@@ -50,12 +51,32 @@ function DataProvider({children}){
         
     }
 
+    //player methods
+
     const fetchPlayers=(player_username)=>{
         fetch(`${API_URL}chess_app/player/${player_username}/`)
             .then(response => response.json())
             .then(data => setPlayers(data))
             .catch(error => console.error('Error fetching players:', error));
     }
+
+    const fetchTie=(player_username)=>{
+      fetch(`${API_URL}chess_app/player/${player_username}/tie`)
+          .then(response => response.json())
+          .then(data => setTie(data))
+          .catch(error => console.error('Error fetching players:', error));
+  }
+
+  const fetchMostPlayers=(player_username)=>{
+    fetch(`${API_URL}chess_app/player/${player_username}/most`)
+        .then(response => response.json())
+        .then(data => setMost(data))
+        .catch(error => console.error('Error fetching players:', error));
+}
+
+
+
+    //player methods
 
     const fetchTeams=()=>{
         fetch(`${API_URL}chess_app/teams/`)
@@ -274,6 +295,10 @@ const deleteMatch=async (match_id)=>{
 
         player:player,
         fetchPlayers:fetchPlayers,
+        tie:tie,
+        fetchTie:fetchTie,
+        mostPlayers:mostPlayers,
+        fetchMostPlayers:fetchMostPlayers,
 
         teams:teams,
         fetchTeams:fetchTeams,

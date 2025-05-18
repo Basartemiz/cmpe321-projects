@@ -21,7 +21,11 @@ const PlayerCard = (props) => {
 
             <strong>Player name:</strong> {name} <br />
             <strong>Player surname:</strong> {surname} <br />
-            <strong>Elo-rating:</strong> {elo_rating}
+            {elo_rating && (
+              <span>
+                <strong>Elo-rating:</strong> {elo_rating}
+              </span>
+            )}
             
           </p>
         </div>
